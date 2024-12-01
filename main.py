@@ -7,6 +7,9 @@ from pymongo import MongoClient
 
 app = FastAPI()
 
+connection_string = os.environ.get("MONGO_URI")
+if not connection_string:
+    raise ValueError("MONGO_URI environment variable is not set")
 
 client = MongoClient(connection_string)
 
