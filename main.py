@@ -7,7 +7,6 @@ from pymongo import MongoClient
 
 app = FastAPI()
 
-connection_string = "mongodb+srv://kaustubhpandey528491:ZxSFBvl9kIOTHcvf@cluster0.ln29l.mongodb.net/"
 
 client = MongoClient(connection_string)
 
