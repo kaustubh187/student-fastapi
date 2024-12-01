@@ -9,14 +9,11 @@ app = FastAPI()
 
 connection_string = "mongodb+srv://kaustubhpandey528491:ZxSFBvl9kIOTHcvf@cluster0.ln29l.mongodb.net/"
 
-# Connect to the MongoDB Atlas cluster
 client = MongoClient(connection_string)
 
-# Access the database
 db = client["studentdb"]
 db.students.create_index("id", unique=True)
 
-# Models
 class Address(BaseModel):
     city: str
     country: str
@@ -45,7 +42,7 @@ class StudentUpdate(BaseModel):
 @app.post("/students", status_code=201, response_model=dict)
 def create_student(student: StudentCreate):
     student_dict = student.model_dump()
-    student_id = str(uuid.uuid4())  # Generate a custom ID
+    student_id = str(uuid.uuid4())  
     student_dict["id"] = student_id
     db.students.insert_one(student_dict)
     return {"id": student_id}
@@ -65,7 +62,7 @@ def list_students(
     students = db.students.find(query)
     return [
         {**student, "_id": None} for student in students
-    ]  # Exclude _id and return JSON-friendly dict
+    ]  
 
 
 @app.get("/students/{id}", response_model=StudentResponse, status_code=200)
@@ -73,7 +70,7 @@ def fetch_student(id: str = Path(..., description="The ID of the student")):
     student = db.students.find_one({"id": id})
     if not student:
         raise HTTPException(status_code=404, detail="Student not found")
-    student.pop("_id", None)  # Remove MongoDB's _id
+    student.pop("_id", None) 
     return student
 
 
