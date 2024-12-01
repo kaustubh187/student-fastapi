@@ -3,6 +3,7 @@ from fastapi import FastAPI, HTTPException, Path, Query
 from typing import List, Optional
 from pydantic import BaseModel
 from pymongo import MongoClient
+import os
 
 
 app = FastAPI()
