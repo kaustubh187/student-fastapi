@@ -42,6 +42,12 @@ class StudentUpdate(BaseModel):
 
 
 # Routes
+@app.get("/")
+async def read_root():
+    return {"message": "Welcome to the FastAPI app!"}
+
+
+
 @app.post("/students", status_code=201, response_model=dict)
 def create_student(student: StudentCreate):
     student_dict = student.model_dump()
